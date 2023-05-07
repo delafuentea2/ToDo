@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TasksRequest;
+use App\Models\State;
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate;
+
 
 class TaskController extends Controller
 {
@@ -14,8 +18,10 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $task= Task::All();
-        return view('task.index',compact('task') );
+        $task = Task::All();
+        return view('tasks.index', [
+            'tasks' => $task
+        ]);
     }
 
     /**
@@ -25,7 +31,8 @@ class TaskController extends Controller
      */
     public function create()
     {
-        return view('tareas.create');
+        $states = State::pluck('states', 'id')->toArray();
+        return view('tasks.create', compact('states'));
     }
 
     /**
@@ -34,20 +41,19 @@ class TaskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TasksRequest $request)
     {
-        $validatedData = $request->validate([
-            'tarea' => 'required|max:255',
-            'state_id' => 'required|numeric',
+        $validatedData = $request->validated();
+
+        Task::create([
+            'titulo' => $validatedData['titulo'],
+            'descripcion' => $validatedData['descripcion'],
+            'states_id' => 1,
+            'user_id' => auth()->user()->id,
         ]);
 
-        $tarea = new Task();
-        $tarea->tarea = $validatedData['tarea'];
-        $tarea->user_id =auth()->user()->id;
-        $tarea->state_id = $validatedData['state_id'];
-        $tarea->save();
-
-        return redirect()->route('task.index');
+        $request->session()->flash('alert-success', 'Tarea realizada correctamente');
+        return to_route('tasks.index');
     }
 
     /**
@@ -56,10 +62,16 @@ class TaskController extends Controller
      * @param  \App\Models\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function show(Task $task, $id)
+    public function show($id)
     {
-        $tareas = Task::findOrFail($id);
-        return view('tareas.show', compact('tareas'));
+        $task = Task::find($id);
+        if (!$task) {
+            request()->session()->flash('error', 'Tarea no encontrada');
+            return to_route('tasks.index')->withErrors([
+                'error' => 'No encontrado'
+            ]);
+        }
+        return view('tasks.show', ['task' => $task]);
     }
 
     /**
@@ -68,10 +80,16 @@ class TaskController extends Controller
      * @param  \App\Models\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function edit(Task $task, $id)
+    public function edit($id)
     {
-        $tareas = Task::findOrFail($id);
-        return view('tareas.edit', compact('tareas'));
+        $task = Task::find($id);
+        if (!$task) {
+            request()->session()->flash('error', 'Tarea no encontrada');
+            return to_route('tasks.index')->withErrors([
+                'error' => 'No encontrado'
+            ]);
+        }
+        return view('tasks.edit', ['task' => $task]);
     }
 
     /**
@@ -81,10 +99,30 @@ class TaskController extends Controller
      * @param  \App\Models\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Task $task)
+    public function update(TasksRequest $request)
     {
-        //
+
+        $task = Task::find($request->task_id);
+        if (!$task) {
+            request()->session()->flash('error', 'Tarea no encontrada');
+            return to_route('tasks.index')->withErrors([
+                'error' => 'No encontrado'
+            ]);
+        }
+
+        $task->update([
+            'titulo' => $request->titulo,
+            'descripcion' => $request->descripcion,
+            'states' => $request->states
+        ]);
+
+
+        $request->session()->flash('alert-info', 'Tarea actualizada correctamente');
+        return to_route('tasks.index');
+        
     }
+
+
 
     /**
      * Remove the specified resource from storage.
@@ -92,8 +130,19 @@ class TaskController extends Controller
      * @param  \App\Models\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Task $task)
+    public function destroy(Request $request )
     {
-        //
+        $task = Task::find($request->task_id);
+        if (!$task) {
+            request()->session()->flash('error', 'Tarea no encontrada');
+            return to_route('tasks.index')->withErrors([
+                'error' => 'No encontrado'
+            ]);
+        }
+
+        $task->delete();
+        
+        $request->session()->flash('alert-success', 'Tarea eliminada correctamente');
+        return to_route('tasks.index');
     }
 }
