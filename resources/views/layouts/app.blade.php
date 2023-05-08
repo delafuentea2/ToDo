@@ -10,10 +10,7 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-<<<<<<< HEAD
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-=======
->>>>>>> b1fd7e8cf6e91f81560ab987bcccfc5a1e03e895
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])

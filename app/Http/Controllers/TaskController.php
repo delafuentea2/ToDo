@@ -48,7 +48,7 @@ class TaskController extends Controller
         Task::create([
             'titulo' => $validatedData['titulo'],
             'descripcion' => $validatedData['descripcion'],
-            'states_id' => 1,
+            'states_id' => $validatedData['states'],
             'user_id' => auth()->user()->id,
         ]);
 
