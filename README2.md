@@ -1,4 +1,4 @@
-Workflow de GitHub
+## Workflow de GitHub
 GitHub es una plataforma de alojamiento de código fuente y herramienta de colaboración que te permite trabajar en proyectos de software en equipo. Su workflow básico implica los siguientes pasos:
 
 Crear un repositorio: puedes crear un repositorio vacío en GitHub o clonar un repositorio existente en tu máquina local.
@@ -17,7 +17,7 @@ Fusionar los cambios: después de que se hayan abordado los comentarios y se hay
 
 Despliegue: una vez que se han fusionado los cambios, se pueden desplegar en el servidor o en el entorno de producción.
 
-Cómo crear un proyecto todo en Laravel
+## Cómo crear un proyecto todo en Laravel
 Laravel es un framework PHP que te permite desarrollar aplicaciones web con facilidad. Si quieres crear un proyecto todo en Laravel, estos son los pasos que puedes seguir:
 
 Instalar Laravel: lo primero que necesitas hacer es instalar Laravel en tu máquina local. Puedes hacerlo utilizando el instalador de Laravel o Composer.
@@ -35,3 +35,10 @@ Crear rutas: Laravel utiliza un archivo routes/web.php para definir las rutas de
 Crear vistas: las vistas son responsables de mostrar la información al usuario. Puedes crear vistas utilizando el motor de plantillas Blade de Laravel.
 
 Desplegar la aplicación: una vez que hayas terminado de desarrollar tu aplicación, puedes desplegarla en un servidor o en un entorno de producción.
+
+
+##Hechos
+
+*Página 'index' donde puedo crear las tareas, ver las tareas creadas y acceder a sus funcionalidades.
+*Página 'show' donde puedo ver los detalles de las tareas
+*Página 'editar' donde se puede editar las tareas
