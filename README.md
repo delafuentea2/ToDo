@@ -39,6 +39,6 @@ Desplegar la aplicación: una vez que hayas terminado de desarrollar tu aplicaci
 
 ## Hechos
 
--Página 'index' donde puedo crear las tareas, ver las tareas creadas y acceder a sus funcionalidades.
--Página 'show' donde puedo ver los detalles de las tareas
--Página 'editar' donde se puede editar las tareas
+- Página 'index' donde puedo crear las tareas, ver las tareas creadas y acceder a sus funcionalidades.
+- Página 'show' donde puedo ver los detalles de las tareas
+- Página 'editar' donde se puede editar las tareas
